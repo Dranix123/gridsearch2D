@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Charley Wu (based on work by James Chu)">
+    <meta charset="utf-8">
+    <title>探索未知</title>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery-ui-1.10.4/ui/jquery-ui.js"></script>
+    <script src="js/d3.v3.min.js" charset="utf-8"></script>
+
+
+    <script src="js/FileSaver.js-2.0.2/dist/FileSaver.min.js"></script>
+    <script src='js/jspsych/dist/jspsych.js'></script>
+
+    <link rel='stylesheet' href='js/jspsych/dist/jspsych.css'>
+
+    <script src="js/jspsych/dist/plugin-html-keyboard-response.js"></script>
+
+
+    <script src='js/axios.min.js'></script>
+
+    <link rel="stylesheet" type="text/css" href="grid2D.css">
+    <link href="js/jquery-ui-1.10.4/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="js/bootstrap-3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+    <body>
+         
+         <div class="container">
+            <div class="row">
+         
+
+                <!--Second page contains Ethics statement-->
+                <div id="page1" style="display:block">
+                    <h3>线上实验的知情同意</h3>
+                    <img border="0" src="images/SPCS_Logo1.png" align="center"><br>
+                    <p> 北京大学心理与认知科学学院</p>
+                    <p>这项研究已经得到伦理委员会的批准<br> Designed by: Wanze Xie<br>Adapted from: Charley Wu<br> Email:
+                        <font color="blue">wanze.xie@pku.edu.cn</font><br></p>
+                    <h4> 任务描述 </h4>
+                    <p>这项研究是北京大学心理与认知科学学院进行的一个课题.在本测试中,你需要完成一个简单的任务,即探索网格并获得尽可能高的总分.</p>
+
+                    <p> 请仔细阅读提示,并尽可能按真实想法操作. 如果中途退出,将不会得到额外奖励. 研究将会持续大约 <b>15分钟</b>. </p>
+
+                    <h4> 数据隐私 </h4>
+                    <p>我们的工作严格遵守保护隐私的规定.研究中获取的信息将按照数据隐私法进行保密、存档和科学处理.个人资料不会移交给任何第三方.这些数据将仅用于研究目的,仅存于北京大学心理与认知科学学院内部.</p>
+
+
+                    <p>点击下面的按钮,即表示您同意以下内容: </p>
+                    <ul>
+                        <li>我已阅读并接受上述条款和条件,并同意参加本次研究. </li>
+                        <li>我明白,如果我愿意,我可以自由地退出研究,我知晓并同意我的实验数据仅用于本次研究,而不会被用于任何其他目的. </li>
+                        <li>本人明白上述资料将会严格保密,并保持隐私.</li>
+                        <li>本人明白本人所提交的资料将会以研究报告形式发表.报告将保持保密和匿名的原则,不可能从任何出版物中识别出我的信息. </li>
+                        <li>我知道我完成这项研究是有报酬的.</li>
+                    </ul>
+                    <br>
+                    <button type="button" name="button" ; onclick="clickStart('page1','page2'); assignScenario();" ;>同意</button>
+                </div>
+
+                <div id="page2" style="display:none">
+                    <div id="instructions1" style="display:none">
+                    <h3><b>欢迎来到颜色格子游戏！</b></h3>
+                    <p>接下来，你将在电脑上依次看到8个像棋盘一样的网格。每个小格子上有不同的分数。</p>
+                    <br>
+                    <p>游戏的目标是：</p> 
+                    <p> <b>尽可能找到分数更高的格子，以得到更高的总分！</b></p>
+                    <p>最终累计得分越高，你就能得到更多贴纸！</p>
+                    <br>
+                    <p><b>游戏怎么玩？</b> </p>
+                    <ul>
+                        <li>每一轮开始时，屏幕上会自动显示一个格子的分数。</li>
+                        <li>你可以用鼠标点格子： </li>
+                        <ul>
+                            <li>点一个还没打开的格子，它的分数会显示出来；</li>
+                            <li>点一个已经打开的格子，你可以再次得到它的分数（可能会有点小变化哦～）。</li>
+                        </ul>
+                    </ul>
+                    <br>
+                    <p>你每次最多可以点<b>40或者20次（这是随机的）</b>，试着找到分数更高的格子吧！</p>
+                    <br>
+                    <p><b>小提示！</b></p>
+                    <p>分数更高的格子常常会<b>挨在一起</b>，分数更少的格子也会靠在一起。</p>
+                    <p>所以，当你找到一个分数更高的格子时，附近可能还有更多呢～</p>
+                    <br>
+                    <p> 下面,我们展示了一些网格的例子,颜色较深的方格对应较高的得分.</p>
+                            <br><br>
+                    </div>
+                    <div id="instructions2" style = "display:none">
+                        <h3>Instructions:</h3>
+                        <p><b>Please read the following instructions very carefully:</b></p>
+                        <br>
+                        <p> In the following study, you will be presented with a series of <b>8 different grids to explore</b>. By clicking on tiles in the grid, you reveal points that are associated to the location on the grid. On each grid, you will have <b>either 20 or 40 clicks</b>, with the number of remaining clicks displayed above the grid. When you run out of clicks, you will start a new trial on the next unexplored grid.<p>
+                        <p> Each grid starts with a single tile revealed. Use your mouse to click and reveal new tiles, which will display a number corresponding to the number of points you gain. Revealed tiles are also color coded, as a visual aid to help you in this task. Darker colors correspond to larger rewards. Previously revealed tiles can also be reselected and there may be small changes in the point value.</p>
+                        <p> It is your task to <b>learn where the largest reward is</b> in each of the 8 grids. You will be assigned a bonus of up to $1.50 based on the largest value you reveal in each grid. </p>
+                        <p><b>Important!</b> Points are clustered along the grid, such that areas with high-value points tend to appear close to each other and areas of low-value points tend to appear close to each other. All payoffs are greater than zero, with the maximum payoff differing between grids. </p>
+                        <p>Below, we show some examples of what the distribution of points are like, with the darker tiles indicating higher point values.</p>
+                    </div>
+                    <div id='examples'>
+                        <div id='example1' style='display:none'> </div>
+                        <div id='example2' style='display:none'></div>
+                        <div id='example3' style='display:none'></div>
+                        <div id='example4' style='display:none'></div>
+                        <div style="width:500px;margin:0 auto">
+                            <br><br>
+                          <button type="button" name="button" id='exampleButton'; onclick="showExample();"; >看看例子</button>  
+                        </div>
+                    </div>
+                 </div>
+
+
+                <div id="page3" style="display:none">
+                    <fieldset>
+                    <legend>现在来答几个小问题，看看你是不是学会了怎么玩游戏：</legend>
+                    <fieldset style="float:left;width:400px;margin:5px">
+                        1.	你这个游戏的任务是什么？<br>
+                        <input type="radio" name="q1"  > 学颜色 <br>
+                        <input type="radio" name="q1" id="icheck1a" > 获得尽可能高的累计得分 <br>
+                        <input type="radio" name="q1" id="icheck1b" > 找到分数最高的那个格子 <br>
+                        <input type="radio" name="q1" > 不知道 <br>
+                    </fieldset>
+                    <fieldset style="float:left;width:400px;margin:5px">
+                        2.	你怎么才能获得分数？<br>
+                        <input type="radio" name="q2"> 不知道 <br>
+                        <input type="radio" name="q2"> 只能点新的白格子 <br>
+                        <input type="radio" name="q2"> 只能重新点已经变颜色的格子 <br>
+                        <input type="radio" name="q2" id="icheck2"  > 点新格子或重新点旧格子都可以 <br>
+                    </fieldset>
+                    <fieldset style="float:left;width:400px;margin:5px">
+                        3.	分数更高的格子是怎么分布的？<br>
+                        <input type="radio" name="q3"               >  
+                         随便放的<br>
+                        <input type="radio" name="q3"               > 
+                         分数更高的永远不会靠在一起 <br>
+                        <input type="radio" name="q3"               > 
+                         分数更高的总是靠在一起 <br>
+                        <input type="radio" name="q3" id="icheck3"  > 
+                         分数更高的往往靠在一起<br>
+                    </fieldset>
+                    </fieldset>
+
+                    <br><br><br><br>
+                    <p> 只有当你正确回答了所有的问题,你才能开始游戏哦～</p>
+                    <div style="width:500px;margin:0 auto">
+                        <button type="button" name="button"; onclick="instructioncheck()"; >检查答案</button>  
+                    </div>
+                </div>
+
+
+                <div id="page4" style="display:none">
+                    <br><br>
+                    很棒! 完全正确,现在可以开始游戏了！ <br><br>
+                    <div style="width:500px;margin:0 auto">
+                        <button type="button" name="button"; onclick="clickStart('page4','page5')"; >开始</button>  
+                    </div>
+                </div>
+
+                <div id="page5" style="display:none">
+                <!-- Begin page content -->
+                    <div class="page-header" id="expHeader1" style = 'display:none'>
+                        <h1> <font size="4">目标: 获得尽可能高的总分！</font> </h1>
+                    </div>
+                    <div class="page-header" id="expHeader2" style = 'display:none'>
+                        <h1> <font size="4">Goal: Learn where the largest reward is.</font> </h1>
+                    </div>
+                    <div id="explainexshow" style="display:block">
+                        <p> <b>小提示！</b></p>
+                        <p><b>I.</b> 下面是棋盘一样的网格。点击后可以看到每个小格子上不同的分数（颜色越深，分数越高～） </p>
+                        <p><b>II.</b> 点一个已经打开的格子，你可以再次获得它的分数（可能会有点小变化哦～）</p>
+                        <p><b>III.</b> 相近的小格子往往有相近的分数。 </p>
+                        <p><b>IV.</b> 在网格上方，你会看到当前总分，剩下的网格数和剩下的点击次数。</p>
+                        <p><b>V.</b> 一共有8个不同的网格,你每次最多可以点 40或者20次（这是随机的）</p>
+                    </div>
+                    <div id='gridDiv'>
+                        <font color="green"><center><h4><b><div id="scoretotal">当前总分: 0</div></b></h4></center> </font>
+                        <center><h4><div id="remaining1">剩下的网格数: <b>8</b></div></h4></center> 
+                        <center><h4><div id="remaining2">剩下的点击次数: <b>20</b></div></h4></center> 
+                        <div style="width:500px;margin:0 auto">
+                            <center>
+                            <table id='grid' class='grid'> <tbody></tbody> </table> 
+                            </center>       
+                        </div>
+                        <br><br>
+                    </div>
+                        <div id="page5finished" style="display:none">
+                            <br><br>
+                            <div id="trials"> 恭喜你探索完了这个网格. 你还有7个网格要探索. </div>
+                            <br><br>
+                            <div style="width:5000px;margin:0 auto">
+                                <button type="button" id="nextTrialButton"; onclick="nexttrial()"; >继续</button>  
+                            </div>
+                        </div>
+                        <div id="page5guess" style="display:none">
+                            <br><br>
+                            <div id="Guess"> <h1> <font size="4">你已经用完了点击次数. 请你点击你认为分值最高的格子.</font> </h1> </div>
+                            <br><br>
+                            <div style="width:500px;margin:0 auto">
+                                <button type="button" id="nextTrialButton"; onclick="clickStart('page5guess', 'gridDiv')"; >Continue</button>  
+                            </div>
+                    </div>
+                </div>
+
+                <div id="page6" style="display:none">
+                    <div class="page-header" id="thanksforcompleting" >
+                        <h1> <font size="4">谢谢你参加我们的游戏！</font> </h1>
+                    </div>
+              <fieldset>
+              <div>
+                请在我们的帮助下 <b>填写信息</b> ：<br><br>
+                <form>
+                    ID:<br>
+                    <input type="text" id="MTurkID"><br>
+                </form>
+                </div> <br>
+              <div>
+                <br>
+                <form>
+                    年龄:<br>
+                    <input type="text" id="age"><br>
+                </form>
+              </div><br>
+              <div>
+                性别<br>
+                <input id="gender1" type="radio" name="gender" value="0" > 女<br>
+                <input id="gender2" type="radio" name="gender" value="1" > 男<br>
+              </div><br>
+              <div>
+              <form>可以告诉我们你在点击格子时使用的策略吗: <br>
+                <textarea cols="40" rows="5" id = "processDescription" name="Comments"> 比如：你是如何提高总分的?</textarea><br><br>
+              </form>
+              </div>
+              </fieldset>                    
+                    <div style="width:50px;margin:0 auto">
+                        <button type="button" name="button"; onclick="senddata()"; >完成</button>
+                    </div>
+                </div>
+
+                <div id="page7" style="display:none">
+                    <h3>再次感谢你参加我们的实验😊</h3>
+
+                </div>
+
+
+            </div>
+        </div>
+        <script src="js/gridSearch.js" charset="utf-8"></script>
+    </body>
+</html>
